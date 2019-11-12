@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     private fun onClickGetArea() {
         val observable = ApiService.areaApiCall()
-            .getArea("resourceAquire", "5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a", 25, 0)
-
+            .getArea("resourceAquire", "5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a", 1, 0)
 
         observable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
