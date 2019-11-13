@@ -19,23 +19,23 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var areaRepo: AreaRepo
+    lateinit var areaViewModel: AreaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        areaRepo = AreaRepoImpl()
+
         btn_get_area.setOnClickListener { view -> onClickGetArea() }
 
-        val model = ViewModelProviders.of(this)[AreaViewModel::class.java]
-        model.getAreas().observe(this, Observer<List<Area>>{ areas ->
+        areaViewModel = ViewModelProviders.of(this)[AreaViewModel::class.java]
+        areaViewModel.getAreas().observe(this, Observer<List<Area>>{ areas ->
             // update UI
-            Log.i(Constants.LOG_TAG, "areas $areas")
+            Log.i(Constants.LOG_TAG, "areas observe $areas")
         })
     }
 
     @SuppressLint("CheckResult")
     private fun onClickGetArea() {
-//        areaRepo.getAreaInfo()
+        areaViewModel.getAreaInfo()
     }
 }
