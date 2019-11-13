@@ -1,6 +1,7 @@
 package com.hs.opendata.network.request
 
 import com.hs.opendata.network.response.AreaResponse
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
