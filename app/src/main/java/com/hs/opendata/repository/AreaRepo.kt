@@ -22,6 +22,20 @@ interface AreaRepo {
 class AreaRepoImpl() : AreaRepo {
     @SuppressLint("CheckResult")
 
+    fun getMockAreaData(): List<Area> {
+        var a = listOf(
+            Area(
+                "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",
+                "", "", 99, "", "Name1", "MemoMemoMemo1", 999, "d"
+            ),
+            Area(
+                "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",
+                "", "", 99, "", "Name2", "MemoMemoMemo2", 999, "d"
+            )
+        )
+        return a
+    }
+
     override fun getAreaInfo(callback: AreaRepo.LoadAreaCallback) {
         val observable = ApiService.areaApiCall()
             .getArea("resourceAquire", "5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a", 5, 0)
@@ -29,11 +43,13 @@ class AreaRepoImpl() : AreaRepo {
         observable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ userResponse ->
-//                Log.i(Constants.LOG_TAG, userResponse.result.results[0].toString())
+                //                Log.i(Constants.LOG_TAG, userResponse.result.results[0].toString())
                 val areaResponse: List<Area> = userResponse.result.results
-                callback.onGetAreaResult(areaResponse)
+//                callback.onGetAreaResult(areaResponse)
+                callback.onGetAreaResult((getMockAreaData()))
             }, { error ->
                 Log.i(Constants.LOG_TAG, error.toString())
+                callback.onGetAreaResult((getMockAreaData()))
             })
     }
 }
