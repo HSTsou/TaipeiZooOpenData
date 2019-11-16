@@ -1,6 +1,7 @@
 package com.hs.opendata.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,13 +10,15 @@ import com.bumptech.glide.Glide
 import com.hs.opendata.R
 import com.hs.opendata.model.Area
 
-class AreaListAdapter : RecyclerView.Adapter<AreaViewHolder>() {
+class AreaListAdapter(onClickCallback: OnClickCallback) : RecyclerView.Adapter<AreaViewHolder>() {
 
-    var list:List<Area>?=null
+    var list: List<Area>? = null
+    private var mOnClickCallback = onClickCallback
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return AreaViewHolder(inflater, parent)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.area_list_item, parent, false)
+        return AreaViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AreaViewHolder, position: Int) {
@@ -23,6 +26,7 @@ class AreaListAdapter : RecyclerView.Adapter<AreaViewHolder>() {
             return
         }
         val area: Area = list!![position]
+        holder.itemView.setOnClickListener(ClickListener(area, position))
         holder.bind(area)
     }
 
@@ -38,20 +42,27 @@ class AreaListAdapter : RecyclerView.Adapter<AreaViewHolder>() {
         notifyDataSetChanged()
     }
 
+    inner class ClickListener(area: Area, position: Int) : View.OnClickListener {
+        val mPosition = position
+        val mArea = area
+        override fun onClick(v: View?) {
+            mOnClickCallback.onClick(v!!, mArea, mPosition)
+        }
+    }
 }
 
-class AreaViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.area_list_item, parent, false)) {
+class AreaViewHolder(view: View) :
+    RecyclerView.ViewHolder(view) {
     private var mTitleView: TextView? = null
     private var mImageView: ImageView? = null
     private var mDescView: TextView? = null
     private var mOpenDateView: TextView? = null
 
     init {
-        mTitleView = itemView.findViewById(R.id.list_title)
-        mImageView = itemView.findViewById(R.id.pic)
-        mDescView = itemView.findViewById(R.id.desc)
-        mOpenDateView = itemView.findViewById(R.id.open_date)
+        mTitleView = view.findViewById(R.id.list_title)
+        mImageView = view.findViewById(R.id.pic)
+        mDescView = view.findViewById(R.id.desc)
+        mOpenDateView = view.findViewById(R.id.open_date)
     }
 
     fun bind(area: Area) {
@@ -61,13 +72,10 @@ class AreaViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
         mImageView?.let {
             Glide.with(itemView)
-                .load(area.e_Pic_URL).circleCrop()
-//                .centerCrop() //4
-    //                    .placeholder(R.drawable.ic_image_place_holder) //5
-    //                    .error(R.drawable.ic_broken_image) //6
-    //                    .fallback(R.drawable.ic_no_image) //7
+                .load(area.e_Pic_URL)
+                .circleCrop()
                 .into(it)
-        } //8
+        }
     }
 
 }

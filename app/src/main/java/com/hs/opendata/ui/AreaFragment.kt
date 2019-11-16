@@ -1,6 +1,5 @@
 package com.hs.opendata.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,8 +17,8 @@ import com.hs.opendata.viewModel.AreaViewModel
 
 class AreaFragment : Fragment() {
     lateinit var areaViewModel: AreaViewModel
-    lateinit var recyclerView:RecyclerView
-    lateinit var adapter:AreaListAdapter
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: AreaListAdapter
 
     companion object {
         fun newInstance(): AreaFragment = AreaFragment()
@@ -34,9 +33,9 @@ class AreaFragment : Fragment() {
             R.layout.fragment_area, container,
             false
         )
-        recyclerView = view.findViewById<RecyclerView>(R.id.area_list_recycler_view)
+        recyclerView = view.findViewById(R.id.area_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = AreaListAdapter()
+        adapter = AreaListAdapter(OnItemClick())
         recyclerView.setAdapter(adapter)
         return view
     }
@@ -45,10 +44,20 @@ class AreaFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         areaViewModel = ViewModelProviders.of(this)[AreaViewModel::class.java]
-        areaViewModel.getAreas().observe(this, Observer<List<Area>>{ areas ->
+        areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)
         })
         areaViewModel.getAreaInfo()
     }
+
+    inner class OnItemClick : OnClickCallback {
+        override fun onClick(view: View, area: Area, position: Int) {
+            Log.i(Constants.LOG_TAG, "area: $area, position: $position")
+        }
+    }
+}
+
+interface OnClickCallback {
+    fun onClick(view: View, area: Area, position: Int)
 }
