@@ -27,6 +27,7 @@ class AreaListAdapter(onClickCallback: OnClickCallback) : RecyclerView.Adapter<A
         }
         val area: Area = list!![position]
         holder.itemView.setOnClickListener(ClickListener(area, position))
+        holder.itemView.setOnLongClickListener(LongClickListener(area, position))
         holder.bind(area)
     }
 
@@ -47,6 +48,16 @@ class AreaListAdapter(onClickCallback: OnClickCallback) : RecyclerView.Adapter<A
         val mArea = area
         override fun onClick(v: View?) {
             mOnClickCallback.onClick(v!!, mArea, mPosition)
+        }
+    }
+
+    inner class LongClickListener(area: Area, position: Int) : View.OnLongClickListener {
+        val mPosition = position
+        val mArea = area
+
+        override fun onLongClick(v: View?): Boolean {
+            mOnClickCallback.onLongClick(v!!, mArea, mPosition)
+            return true
         }
     }
 }
