@@ -7,19 +7,12 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 
 import com.hs.opendata.ui.AreaFragment
-import com.hs.opendata.viewModel.AreaViewModel
-
-
 import com.hs.opendata.ui.FavAreaFragment
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-
-
 class MainActivity : AppCompatActivity() {
-
-    lateinit var areaViewModel: AreaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-        getSupportActionBar()?.setTitle("Zoo Area")
-    }
-
-    fun setupBottomNavigation () {
+    fun setupBottomNavigation() {
         val bottomNavigationView = findViewById(R.id.bottom_navigation) as BottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -59,29 +46,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-//
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater = menuInflater
-//        inflater.inflate(R.menu.bottom_navigation_menu, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle item selection
-//        when (item.getItemId()) {
-//            R.id.action_area_list -> {
-//                val frag = AreaFragment.newInstance()
-//                replaceFragment(frag, "AreaListFragment")
-//                return true
-//            }
-//            R.id.action_favorites -> {
-//                val frag = FavAreaFragment.newInstance()
-//                replaceFragment(frag, "AreaFavFragment")
-//                return true
-//            }
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
 
     fun replaceFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()

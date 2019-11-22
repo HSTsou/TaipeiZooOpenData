@@ -28,7 +28,6 @@ class AreaViewModel(application: Application) : AndroidViewModel(application) {
     fun getAreaInfo() {
         AreaRepoImpl(AreaDatabase.getDatabase(context)).getAreaInfo(object : AreaRepo.LoadAreaCallback {
             override fun onGetAreaResult(areaList: List<Area>) {
-//                Log.i(Constants.LOG_TAG, "areas onGetAreaResult $areas")
                 areas.value = areaList
             }
         })

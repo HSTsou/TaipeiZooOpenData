@@ -46,15 +46,19 @@ class AreaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        = view.findViewById(R.id.toolbar)
-//        (activity as MainActivity).setSupportActionBar(mToolbar)
-
         areaViewModel = ViewModelProviders.of(this)[AreaViewModel::class.java]
         areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)
         })
         areaViewModel.getAreaInfo()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).getSupportActionBar()?.setTitle("Area List")
     }
 
     inner class OnItemClick : OnClickCallback {

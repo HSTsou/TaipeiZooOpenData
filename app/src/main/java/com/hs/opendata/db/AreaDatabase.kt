@@ -5,7 +5,6 @@ import androidx.room.*
 import com.hs.opendata.model.Area
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 
 
 @Database(entities = [Area::class], version = 2, exportSchema = false)

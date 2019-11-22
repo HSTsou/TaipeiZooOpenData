@@ -60,7 +60,6 @@ class FavAreaFragment : Fragment() {
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)
         })
-//        favAreaViewModel.getAreaInfo()
     }
 
     inner class OnItemClick : OnClickCallback {
@@ -71,7 +70,6 @@ class FavAreaFragment : Fragment() {
         override fun onLongClick(view: View, area: Area, position: Int) {
             Log.i(Constants.LOG_TAG, " onLongClick delete area: $area, position: $position")
             Toast.makeText(context, "Delete area: ${area.e_Name}", Toast.LENGTH_SHORT).show()
-            //TODO
             favAreaViewModel.deleteArea(area)
         }
     }

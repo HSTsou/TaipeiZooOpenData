@@ -6,13 +6,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
-import androidx.lifecycle.ViewModel
 import com.hs.opendata.constants.Constants
 import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
-import com.hs.opendata.repository.AreaRepo
-import com.hs.opendata.repository.AreaRepoImpl
 import com.hs.opendata.repository.FavAreaRepo
 import com.hs.opendata.repository.FavAreaRepoImpl
 
