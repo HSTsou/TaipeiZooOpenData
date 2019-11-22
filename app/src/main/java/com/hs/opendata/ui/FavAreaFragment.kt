@@ -5,25 +5,30 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hs.opendata.MainActivity
 import com.hs.opendata.R
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.AreaViewModel
 
-class AreaFragment : Fragment() {
-    lateinit var areaViewModel: AreaViewModel
+import com.hs.opendata.MainActivity
+
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.hs.opendata.model.Area
+import com.hs.opendata.viewModel.FavAreaViewModel
+
+
+class FavAreaFragment : Fragment() {
+    lateinit var favAreaViewModel: FavAreaViewModel
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: AreaListAdapter
+    lateinit var adapter: FavAreaAdapter
 
     companion object {
-        fun newInstance(): AreaFragment = AreaFragment()
+        fun newInstance(): FavAreaFragment = FavAreaFragment()
     }
 
     override fun onCreateView(
@@ -38,7 +43,7 @@ class AreaFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.area_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = AreaListAdapter(OnItemClick())
+        adapter = FavAreaAdapter(OnItemClick())
         recyclerView.setAdapter(adapter)
         return view
     }
@@ -46,35 +51,41 @@ class AreaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        = view.findViewById(R.id.toolbar)
-//        (activity as MainActivity).setSupportActionBar(mToolbar)
+        (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).getSupportActionBar()?.setTitle("Favorite Area")
 
-        areaViewModel = ViewModelProviders.of(this)[AreaViewModel::class.java]
-        areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
+
+        favAreaViewModel = ViewModelProviders.of(this)[FavAreaViewModel::class.java]
+        favAreaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)
         })
-        areaViewModel.getAreaInfo()
+//        favAreaViewModel.getAreaInfo()
     }
 
     inner class OnItemClick : OnClickCallback {
         override fun onClick(view: View, area: Area, position: Int) {
             Log.i(Constants.LOG_TAG, "area: $area, position: $position")
-
-            val frag = FavAreaFragment.newInstance()
-            (activity as MainActivity).replaceFragment(frag, "FavAreaFragment")
         }
 
         override fun onLongClick(view: View, area: Area, position: Int) {
-            Log.i(Constants.LOG_TAG, " onLongClick area: $area, position: $position")
-            areaViewModel.saveFavArea(area)
-            Toast.makeText(context, "Add area: ${area.e_Name} to Fav", Toast.LENGTH_SHORT).show()
+            Log.i(Constants.LOG_TAG, " onLongClick delete area: $area, position: $position")
+            Toast.makeText(context, "Delete area: ${area.e_Name}", Toast.LENGTH_SHORT).show()
+            //TODO
+            favAreaViewModel.deleteArea(area)
         }
     }
-}
 
-interface OnClickCallback {
-    fun onClick(view: View, area: Area, position: Int)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                Log.i(Constants.LOG_TAG, "click back")
+                return true
+            }
 
-    fun onLongClick(view: View, area: Area, position: Int)
+
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
 }

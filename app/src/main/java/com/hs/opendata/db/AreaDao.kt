@@ -17,11 +17,11 @@ interface AreaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertArea(area: Area): Completable
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateArea(area: Area)
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    fun updateArea(area: Area)
 
     @Delete
-    fun deleteNewPost(area: Area)
+    fun deleteArea(area: Area): Completable
 //
 //    @Transaction
 //    fun upsert(area: Area) {

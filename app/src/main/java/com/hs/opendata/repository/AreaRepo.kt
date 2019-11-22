@@ -49,23 +49,8 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ userResponse ->
                 val areaResponse: List<Area> = userResponse.result.results
-
-                db.areaDao().insertArea(areaResponse[2])
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        Log.i(Constants.LOG_TAG, "finished insert ${areaResponse[2]}")
-//                        callback.onGetAreaResult(areaResponse)
-//                        db.areaDao().getAll().subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe({
-//                                Log.i(Constants.LOG_TAG, "finished get ${it}")
-//                            })
-                        callback.onGetAreaResult(areaResponse)
-                    })
-
-
 //                callback.onGetAreaResult((getMockAreaData()))
+                callback.onGetAreaResult(areaResponse)
             }, { error ->
                 Log.i(Constants.LOG_TAG, error.toString())
                 callback.onGetAreaResult((getMockAreaData()))
