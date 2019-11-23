@@ -7,6 +7,7 @@ import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.network.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 interface AreaRepo {
@@ -15,9 +16,9 @@ interface AreaRepo {
         fun onGetAreaResult(areaList: List<Area>)
     }
 
-    fun getAreaInfo(callback: LoadAreaCallback)
+    fun getAreaInfo(callback: LoadAreaCallback): Disposable
 
-    fun saveFavArea(area: Area)
+    fun saveFavArea(area: Area): Disposable
 }
 
 class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
@@ -27,12 +28,10 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
     fun getMockAreaData(): List<Area> {
         var a = listOf(
             Area(
-
                 "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",
                 "", "", 99, "", "Name1", "MemoMemoMemo1", 999, "d"
             ),
             Area(
-
                 "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",
                 "", "", 99, "", "Name2", "MemoMemoMemo2", 999, "d"
             )
@@ -41,11 +40,11 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
     }
 
     @SuppressLint("CheckResult")
-    override fun getAreaInfo(callback: AreaRepo.LoadAreaCallback) {
+    override fun getAreaInfo(callback: AreaRepo.LoadAreaCallback): Disposable {
         val observable = ApiService.areaApiCall()
             .getArea("resourceAquire", "5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a", 0, 0)
 
-        observable.subscribeOn(Schedulers.io())
+        return observable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ userResponse ->
                 val areaResponse: List<Area> = userResponse.result.results
@@ -58,12 +57,12 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
     }
 
     @SuppressLint("CheckResult")
-    override fun saveFavArea(area: Area) {
-        db.areaDao().insertArea(area)
+    override fun saveFavArea(area: Area): Disposable {
+        return db.areaDao().insertArea(area)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+            .subscribe {
                 Log.i(Constants.LOG_TAG, "finished insert ${area}")
-            })
+            }
     }
 }
