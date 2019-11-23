@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setupBottomNavigation() {
+    private fun setupBottomNavigation() {
         val bottomNavigationView = findViewById(R.id.bottom_navigation) as BottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {

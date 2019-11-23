@@ -15,8 +15,7 @@ import com.hs.opendata.repository.AreaRepoImpl
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-class AreaViewModel(application: Application) : AndroidViewModel(application) {
-    private val context: Context = application.applicationContext
+class AreaViewModel(val db: AreaDatabase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
     override fun onCleared() {
@@ -35,7 +34,7 @@ class AreaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAreaInfo() {
-        val dis = AreaRepoImpl(AreaDatabase.getDatabase(context)).getAreaInfo(object :
+        val dis = AreaRepoImpl(db).getAreaInfo(object :
             AreaRepo.LoadAreaCallback {
             override fun onGetAreaResult(areaList: List<Area>) {
                 areas.value = areaList
@@ -45,7 +44,7 @@ class AreaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun saveFavArea(area: Area) {
-        val dis = AreaRepoImpl(AreaDatabase.getDatabase(context)).saveFavArea(area)
+        val dis = AreaRepoImpl(db).saveFavArea(area)
         disposables.add(dis)
     }
 }

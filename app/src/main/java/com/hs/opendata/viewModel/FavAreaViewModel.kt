@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.hs.opendata.constants.Constants
 import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
@@ -13,8 +14,7 @@ import com.hs.opendata.repository.FavAreaRepo
 import com.hs.opendata.repository.FavAreaRepoImpl
 import io.reactivex.disposables.CompositeDisposable
 
-class FavAreaViewModel(application: Application) : AndroidViewModel(application) {
-    private val context: Context = application.applicationContext
+class FavAreaViewModel(val db: AreaDatabase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
     override fun onCleared() {
@@ -33,7 +33,7 @@ class FavAreaViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getFavAreaAll() {
-        val dis = FavAreaRepoImpl(AreaDatabase.getDatabase(context)).getFavArea(object :
+        val dis = FavAreaRepoImpl(db).getFavArea(object :
             FavAreaRepo.LoadAreaCallback {
             override fun onGetFavAreaResult(areaList: List<Area>) {
                 Log.i(Constants.LOG_TAG, "getFavAreaAll ${areaList}")
@@ -44,7 +44,7 @@ class FavAreaViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun deleteArea(area: Area) {
-        val dis = FavAreaRepoImpl(AreaDatabase.getDatabase(context)).deleteFavArea(area)
+        val dis = FavAreaRepoImpl(db).deleteFavArea(area)
         disposables.add(dis)
     }
 }

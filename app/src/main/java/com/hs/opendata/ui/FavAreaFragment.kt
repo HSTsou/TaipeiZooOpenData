@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hs.opendata.R
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.viewModel.AreaViewModel
 
 import com.hs.opendata.MainActivity
 
@@ -18,8 +17,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.FavAreaViewModel
+import com.hs.opendata.viewModel.FavAreaViewModelFactory
 
 
 class FavAreaFragment : Fragment() {
@@ -54,8 +55,11 @@ class FavAreaFragment : Fragment() {
         (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
         (activity as MainActivity).getSupportActionBar()?.setTitle("Favorite Area")
 
-
-        favAreaViewModel = ViewModelProviders.of(this)[FavAreaViewModel::class.java]
+        favAreaViewModel = ViewModelProviders.of(
+            this, FavAreaViewModelFactory(
+                AreaDatabase.getDatabase(requireContext())
+            )
+        ).get(FavAreaViewModel::class.java)
         favAreaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)

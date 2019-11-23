@@ -14,8 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hs.opendata.MainActivity
 import com.hs.opendata.R
 import com.hs.opendata.constants.Constants
+import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.AreaViewModel
+import com.hs.opendata.viewModel.AreaViewModelFactory
+import com.hs.opendata.viewModel.FavAreaViewModel
+import com.hs.opendata.viewModel.FavAreaViewModelFactory
 
 class AreaFragment : Fragment() {
     lateinit var areaViewModel: AreaViewModel
@@ -46,7 +50,11 @@ class AreaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        areaViewModel = ViewModelProviders.of(this)[AreaViewModel::class.java]
+        areaViewModel = ViewModelProviders.of(
+            this, AreaViewModelFactory(
+                AreaDatabase.getDatabase(requireContext())
+            )
+        ).get(AreaViewModel::class.java)
         areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)

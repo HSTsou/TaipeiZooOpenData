@@ -14,13 +14,13 @@ interface FavAreaRepo {
         fun onGetFavAreaResult(areaList: List<Area>)
     }
 
-    fun getFavArea(callback: FavAreaRepo.LoadAreaCallback): Disposable
+    fun getFavArea(callback: LoadAreaCallback): Disposable
 
     fun deleteFavArea(area: Area): Disposable
 }
 
 
-class FavAreaRepoImpl(var db: AreaDatabase) : FavAreaRepo {
+class FavAreaRepoImpl(val db: AreaDatabase) : FavAreaRepo {
 
     @SuppressLint("CheckResult")
     override fun getFavArea(callback: FavAreaRepo.LoadAreaCallback): Disposable {
