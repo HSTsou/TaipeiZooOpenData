@@ -18,8 +18,6 @@ import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.AreaViewModel
 import com.hs.opendata.viewModel.AreaViewModelFactory
-import com.hs.opendata.viewModel.FavAreaViewModel
-import com.hs.opendata.viewModel.FavAreaViewModelFactory
 
 class AreaFragment : Fragment() {
     lateinit var areaViewModel: AreaViewModel
@@ -69,7 +67,7 @@ class AreaFragment : Fragment() {
         (activity as MainActivity).getSupportActionBar()?.setTitle("Area List")
     }
 
-    inner class OnItemClick : OnClickCallback {
+    inner class OnItemClick : IOnClickCallback {
         override fun onClick(view: View, area: Area, position: Int) {
             Log.i(Constants.LOG_TAG, "area: $area, position: $position")
 
@@ -85,8 +83,3 @@ class AreaFragment : Fragment() {
     }
 }
 
-interface OnClickCallback {
-    fun onClick(view: View, area: Area, position: Int)
-
-    fun onLongClick(view: View, area: Area, position: Int)
-}

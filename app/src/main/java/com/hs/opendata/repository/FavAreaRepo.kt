@@ -28,7 +28,7 @@ class FavAreaRepoImpl(val db: AreaDatabase) : FavAreaRepo {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                Log.i(Constants.LOG_TAG, "getFavArea ${it}")
+                Log.i(Constants.LOG_TAG, "getFavArea $it")
                 callback.onGetFavAreaResult(it)
             }
     }

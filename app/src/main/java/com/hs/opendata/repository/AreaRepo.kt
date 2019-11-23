@@ -22,11 +22,8 @@ interface AreaRepo {
 }
 
 class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
-    @SuppressLint("CheckResult")
-    lateinit var localDataSource: AreaDatabase
-
-    fun getMockAreaData(): List<Area> {
-        var a = listOf(
+    private fun getMockAreaData(): List<Area> {
+        return listOf(
             Area(
                 "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",
                 "", "", 99, "", "Name1", "MemoMemoMemo1", 999, "d"
@@ -36,7 +33,6 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
                 "", "", 99, "", "Name2", "MemoMemoMemo2", 999, "d"
             )
         )
-        return a
     }
 
     @SuppressLint("CheckResult")
@@ -62,7 +58,7 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                Log.i(Constants.LOG_TAG, "finished insert ${area}")
+                Log.i(Constants.LOG_TAG, "finished insert $area")
             }
     }
 }

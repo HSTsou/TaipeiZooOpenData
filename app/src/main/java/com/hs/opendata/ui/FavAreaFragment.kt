@@ -66,7 +66,7 @@ class FavAreaFragment : Fragment() {
         })
     }
 
-    inner class OnItemClick : OnClickCallback {
+    inner class OnItemClick : IOnClickCallback {
         override fun onClick(view: View, area: Area, position: Int) {
             Log.i(Constants.LOG_TAG, "area: $area, position: $position")
         }

@@ -1,9 +1,6 @@
 package com.hs.opendata.viewModel
 
-import android.app.Application
-import android.content.Context
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -13,7 +10,7 @@ import com.hs.opendata.model.Area
 import com.hs.opendata.repository.AreaRepo
 import com.hs.opendata.repository.AreaRepoImpl
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+
 
 class AreaViewModel(val db: AreaDatabase) : ViewModel() {
     private val disposables = CompositeDisposable()

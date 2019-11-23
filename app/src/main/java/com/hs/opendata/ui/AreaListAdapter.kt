@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.hs.opendata.R
 import com.hs.opendata.model.Area
 
-class AreaListAdapter(onClickCallback: OnClickCallback) : RecyclerView.Adapter<AreaViewHolder>() {
+class AreaListAdapter(onClickCallback: IOnClickCallback) : RecyclerView.Adapter<AreaViewHolder>() {
 
     var list: List<Area>? = null
     private var mOnClickCallback = onClickCallback
@@ -44,16 +44,16 @@ class AreaListAdapter(onClickCallback: OnClickCallback) : RecyclerView.Adapter<A
     }
 
     inner class ClickListener(area: Area, position: Int) : View.OnClickListener {
-        val mPosition = position
-        val mArea = area
+        private val mPosition = position
+        private val mArea = area
         override fun onClick(v: View?) {
             mOnClickCallback.onClick(v!!, mArea, mPosition)
         }
     }
 
     inner class LongClickListener(area: Area, position: Int) : View.OnLongClickListener {
-        val mPosition = position
-        val mArea = area
+        private val mPosition = position
+        private val mArea = area
 
         override fun onLongClick(v: View?): Boolean {
             mOnClickCallback.onLongClick(v!!, mArea, mPosition)
