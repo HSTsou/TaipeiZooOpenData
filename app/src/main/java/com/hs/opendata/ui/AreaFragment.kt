@@ -18,9 +18,10 @@ import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.AreaViewModel
 import com.hs.opendata.viewModel.AreaViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AreaFragment : Fragment() {
-    lateinit var areaViewModel: AreaViewModel
+    val areaViewModel: AreaViewModel by viewModel()
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: AreaListAdapter
 
@@ -48,11 +49,11 @@ class AreaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        areaViewModel = ViewModelProviders.of(
-            this, AreaViewModelFactory(
-                AreaDatabase.getDatabase(requireContext())
-            )
-        ).get(AreaViewModel::class.java)
+//        areaViewModel = ViewModelProviders.of(
+//            this, AreaViewModelFactory(
+//                AreaDatabase.getDatabase(requireContext())
+//            )
+//        ).get(AreaViewModel::class.java)
         areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)
