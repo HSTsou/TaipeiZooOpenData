@@ -5,14 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.repository.FavAreaRepo
-import com.hs.opendata.repository.FavAreaRepoImpl
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class FavAreaViewModel(val db: AreaDatabase) : ViewModel() {
+class FavAreaViewModel : ViewModel(), KoinComponent {
     private val disposables = CompositeDisposable()
+    private val repo: FavAreaRepo by inject<FavAreaRepo>()
 
     override fun onCleared() {
         super.onCleared()
@@ -30,7 +31,7 @@ class FavAreaViewModel(val db: AreaDatabase) : ViewModel() {
     }
 
     private fun getFavAreaAll() {
-        val dis = FavAreaRepoImpl(db).getFavArea(object :
+        val dis = repo.getFavArea(object :
             FavAreaRepo.LoadAreaCallback {
             override fun onGetFavAreaResult(areaList: List<Area>) {
                 Log.i(Constants.LOG_TAG, "getFavAreaAll ${areaList}")
@@ -41,7 +42,7 @@ class FavAreaViewModel(val db: AreaDatabase) : ViewModel() {
     }
 
     fun deleteArea(area: Area) {
-        val dis = FavAreaRepoImpl(db).deleteFavArea(area)
+        val dis = repo.deleteFavArea(area)
         disposables.add(dis)
     }
 }

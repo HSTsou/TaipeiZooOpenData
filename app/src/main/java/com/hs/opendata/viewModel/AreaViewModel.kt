@@ -5,15 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModel
-import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.repository.AreaRepo
-import com.hs.opendata.repository.AreaRepoImpl
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
-class AreaViewModel(val db: AreaDatabase) : ViewModel() {
+
+class AreaViewModel : ViewModel(), KoinComponent {
     private val disposables = CompositeDisposable()
+    private val repo: AreaRepo by inject()
 
     override fun onCleared() {
         super.onCleared()
@@ -31,7 +33,7 @@ class AreaViewModel(val db: AreaDatabase) : ViewModel() {
     }
 
     fun getAreaInfo() {
-        val dis = AreaRepoImpl(db).getAreaInfo(object :
+        val dis = repo.getAreaInfo(object :
             AreaRepo.LoadAreaCallback {
             override fun onGetAreaResult(areaList: List<Area>) {
                 areas.value = areaList
@@ -41,7 +43,7 @@ class AreaViewModel(val db: AreaDatabase) : ViewModel() {
     }
 
     fun saveFavArea(area: Area) {
-        val dis = AreaRepoImpl(db).saveFavArea(area)
+        val dis = repo.saveFavArea(area)
         disposables.add(dis)
     }
 }

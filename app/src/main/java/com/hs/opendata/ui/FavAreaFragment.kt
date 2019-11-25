@@ -21,10 +21,11 @@ import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.FavAreaViewModel
 import com.hs.opendata.viewModel.FavAreaViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class FavAreaFragment : Fragment() {
-    lateinit var favAreaViewModel: FavAreaViewModel
+    private val favAreaViewModel: FavAreaViewModel by viewModel()
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: FavAreaAdapter
 
@@ -55,11 +56,11 @@ class FavAreaFragment : Fragment() {
         (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
         (activity as MainActivity).getSupportActionBar()?.setTitle("Favorite Area")
 
-        favAreaViewModel = ViewModelProviders.of(
-            this, FavAreaViewModelFactory(
-                AreaDatabase.getDatabase(requireContext())
-            )
-        ).get(FavAreaViewModel::class.java)
+//        favAreaViewModel = ViewModelProviders.of(
+//            this, FavAreaViewModelFactory(
+//                AreaDatabase.getDatabase(requireContext())
+//            )
+//        ).get(FavAreaViewModel::class.java)
         favAreaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
             Log.i(Constants.LOG_TAG, "areas observe $areas")
             adapter.updateAreas(areas)

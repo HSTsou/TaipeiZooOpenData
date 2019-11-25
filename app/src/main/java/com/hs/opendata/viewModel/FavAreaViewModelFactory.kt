@@ -9,7 +9,7 @@ class FavAreaViewModelFactory(val database: AreaDatabase) : ViewModelProvider.Fa
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavAreaViewModel::class.java)) {
-            return FavAreaViewModel(database) as T
+            return FavAreaViewModel() as T
         }
         return null as T
     }

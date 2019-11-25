@@ -21,7 +21,7 @@ import com.hs.opendata.viewModel.AreaViewModelFactory
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AreaFragment : Fragment() {
-    val areaViewModel: AreaViewModel by viewModel()
+    private val areaViewModel: AreaViewModel by viewModel()
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: AreaListAdapter
 
@@ -72,8 +72,8 @@ class AreaFragment : Fragment() {
         override fun onClick(view: View, area: Area, position: Int) {
             Log.i(Constants.LOG_TAG, "area: $area, position: $position")
 
-            val frag = FavAreaFragment.newInstance()
-            (activity as MainActivity).replaceFragment(frag, "FavAreaFragment")
+//            val frag = FavAreaFragment.newInstance()
+//            (activity as MainActivity).replaceFragment(frag, "FavAreaFragment")
         }
 
         override fun onLongClick(view: View, area: Area, position: Int) {

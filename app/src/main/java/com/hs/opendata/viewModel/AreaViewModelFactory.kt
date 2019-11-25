@@ -9,7 +9,7 @@ class AreaViewModelFactory(val database: AreaDatabase) : ViewModelProvider.Facto
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AreaViewModel::class.java)) {
-            return AreaViewModel(database) as T
+            return AreaViewModel() as T
         }
         return null as T
     }
