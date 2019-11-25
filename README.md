@@ -3,7 +3,7 @@ Rxjava, Retrofit
 <br>
 (Andorid Arch Comp) ViewModel, LiveData, Room
 <br>
-DI : Koin
+(DI) Koin
 
 MVVM arch.
 
