@@ -10,9 +10,13 @@ import com.hs.opendata.ui.AreaFragment
 import com.hs.opendata.ui.FavAreaFragment
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val areaFragment: AreaFragment by inject()
+    private val favAreaFragment: FavAreaFragment by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, AreaFragment.newInstance(), "AreaList")
+                .add(R.id.fragment_container, areaFragment)
                 .commit()
         }
     }
@@ -33,13 +37,13 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_area_list -> {
-                    val frag = AreaFragment.newInstance()
+                    val frag = areaFragment
                     replaceFragment(frag, "AreaListFragment")
 
                 }
                 R.id.action_favorites -> {
-                    val frag = FavAreaFragment.newInstance()
-                    replaceFragment(frag, "AreaFavFragment")
+                    val frag = favAreaFragment
+                    replaceFragment(frag, "FavAreaFragment")
 
                 }
             }
