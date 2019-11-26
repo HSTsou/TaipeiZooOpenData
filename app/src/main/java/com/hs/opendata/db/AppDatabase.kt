@@ -8,10 +8,10 @@ import androidx.room.migration.Migration
 
 
 @Database(entities = [Area::class], version = 2, exportSchema = false)
-abstract class AreaDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
-        private var INSTANCE: AreaDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
@@ -19,7 +19,7 @@ abstract class AreaDatabase : RoomDatabase() {
             }
         }
 
-        fun getDatabase(context: Context): AreaDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -27,7 +27,7 @@ abstract class AreaDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AreaDatabase::class.java,
+                    AppDatabase::class.java,
                     "area_database"
                 ).addMigrations(MIGRATION_1_2)
                     .build()

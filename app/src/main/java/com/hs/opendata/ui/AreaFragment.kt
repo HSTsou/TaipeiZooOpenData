@@ -8,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hs.opendata.MainActivity
 import com.hs.opendata.R
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.AreaViewModel
-import com.hs.opendata.viewModel.AreaViewModelFactory
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AreaFragment : Fragment() {
@@ -51,7 +48,7 @@ class AreaFragment : Fragment() {
 
 //        areaViewModel = ViewModelProviders.of(
 //            this, AreaViewModelFactory(
-//                AreaDatabase.getDatabase(requireContext())
+//                AppDatabase.getDatabase(requireContext())
 //            )
 //        ).get(AreaViewModel::class.java)
         areaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->

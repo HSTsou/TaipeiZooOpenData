@@ -3,9 +3,10 @@ package com.hs.opendata.repository
 import android.annotation.SuppressLint
 import android.util.Log
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.db.AreaDatabase
+import com.hs.opendata.db.AppDatabase
 import com.hs.opendata.model.Area
-import com.hs.opendata.network.ApiService
+//import com.hs.opendata.network.ApiService
+import com.hs.opendata.network.request.AreaRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -21,7 +22,7 @@ interface AreaRepo {
     fun saveFavArea(area: Area): Disposable
 }
 
-class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
+class AreaRepoImpl(var db: AppDatabase, private val api: AreaRequest) : AreaRepo {
     private fun getMockAreaData(): List<Area> {
         return listOf(
             Area(
@@ -37,7 +38,7 @@ class AreaRepoImpl(var db: AreaDatabase) : AreaRepo {
 
     @SuppressLint("CheckResult")
     override fun getAreaInfo(callback: AreaRepo.LoadAreaCallback): Disposable {
-        val observable = ApiService.areaApiCall()
+        val observable = api
             .getArea("resourceAquire", "5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a", 0, 0)
 
         return observable.subscribeOn(Schedulers.io())

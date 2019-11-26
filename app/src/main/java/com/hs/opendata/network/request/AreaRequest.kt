@@ -8,7 +8,6 @@ import retrofit2.http.Query
 
 interface AreaRequest {
 
-    //    @Headers("Content-Type: application/json")
     @GET("apiAccess")
     fun getArea(
         @Query("scope") scope: String = "resourceAquire",

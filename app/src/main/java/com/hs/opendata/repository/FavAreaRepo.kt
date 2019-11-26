@@ -3,7 +3,7 @@ package com.hs.opendata.repository
 import android.annotation.SuppressLint
 import android.util.Log
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.db.AreaDatabase
+import com.hs.opendata.db.AppDatabase
 import com.hs.opendata.model.Area
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -20,7 +20,7 @@ interface FavAreaRepo {
 }
 
 
-class FavAreaRepoImpl(val db: AreaDatabase) : FavAreaRepo {
+class FavAreaRepoImpl(val db: AppDatabase) : FavAreaRepo {
 
     @SuppressLint("CheckResult")
     override fun getFavArea(callback: FavAreaRepo.LoadAreaCallback): Disposable {

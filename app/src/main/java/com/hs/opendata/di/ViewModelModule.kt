@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     factory {
-//        val db = AreaDatabase.getDatabase(get()) // or androidContext()
+//        val db = AppDatabase.getDatabase(get()) // or androidContext()
         AreaViewModel()
     }
 

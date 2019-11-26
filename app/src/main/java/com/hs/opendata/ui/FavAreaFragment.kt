@@ -16,11 +16,8 @@ import com.hs.opendata.MainActivity
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.hs.opendata.db.AreaDatabase
 import com.hs.opendata.model.Area
 import com.hs.opendata.viewModel.FavAreaViewModel
-import com.hs.opendata.viewModel.FavAreaViewModelFactory
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -58,7 +55,7 @@ class FavAreaFragment : Fragment() {
 
 //        favAreaViewModel = ViewModelProviders.of(
 //            this, FavAreaViewModelFactory(
-//                AreaDatabase.getDatabase(requireContext())
+//                AppDatabase.getDatabase(requireContext())
 //            )
 //        ).get(FavAreaViewModel::class.java)
         favAreaViewModel.getAreas().observe(this, Observer<List<Area>> { areas ->
