@@ -71,9 +71,10 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
+    implementation 'androidx.fragment:fragment-ktx:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.fragment:fragment-ktx:1.1.0'
+    testImplementation 'org.mockito:mockito-core:2.15.0'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

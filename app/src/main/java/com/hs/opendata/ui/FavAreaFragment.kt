@@ -23,8 +23,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavAreaFragment : Fragment() {
     private val favAreaViewModel: FavAreaViewModel by viewModel()
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: FavAreaAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: FavAreaAdapter
 
     companion object {
         fun newInstance(): FavAreaFragment = FavAreaFragment()
@@ -43,15 +43,15 @@ class FavAreaFragment : Fragment() {
         recyclerView = view.findViewById(R.id.area_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = FavAreaAdapter(OnItemClick())
-        recyclerView.setAdapter(adapter)
+        recyclerView.adapter = adapter
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-        (activity as MainActivity).getSupportActionBar()?.setTitle("Favorite Area")
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).supportActionBar?.title = "Favorite Area"
 
 //        favAreaViewModel = ViewModelProviders.of(
 //            this, FavAreaViewModelFactory(

@@ -13,7 +13,7 @@ import org.koin.core.inject
 
 class FavAreaViewModel : ViewModel(), KoinComponent {
     private val disposables = CompositeDisposable()
-    private val repo: FavAreaRepo by inject<FavAreaRepo>()
+    private val repo: FavAreaRepo by inject()
 
     override fun onCleared() {
         super.onCleared()
@@ -34,7 +34,7 @@ class FavAreaViewModel : ViewModel(), KoinComponent {
         val dis = repo.getFavArea(object :
             FavAreaRepo.LoadAreaCallback {
             override fun onGetFavAreaResult(areaList: List<Area>) {
-                Log.i(Constants.LOG_TAG, "getFavAreaAll ${areaList}")
+//                Log.i(Constants.LOG_TAG, "getFavAreaAll $areaList")
                 areas.value = areaList
             }
         })

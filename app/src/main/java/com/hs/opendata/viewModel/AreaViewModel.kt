@@ -9,13 +9,10 @@ import com.hs.opendata.model.Area
 import com.hs.opendata.repository.AreaRepo
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 
-
-
-class AreaViewModel : ViewModel(), KoinComponent {
+class AreaViewModel(private val repo: AreaRepo) : ViewModel(), KoinComponent {
     private val disposables = CompositeDisposable()
-    private val repo: AreaRepo by inject()
+//    private val repo: AreaRepo by inject()
 
     override fun onCleared() {
         super.onCleared()

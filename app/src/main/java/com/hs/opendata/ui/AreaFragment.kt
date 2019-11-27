@@ -19,8 +19,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class AreaFragment : Fragment() {
     private val areaViewModel: AreaViewModel by viewModel()
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: AreaListAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: AreaListAdapter
 
     companion object {
         fun newInstance(): AreaFragment = AreaFragment()
@@ -39,7 +39,7 @@ class AreaFragment : Fragment() {
         recyclerView = view.findViewById(R.id.area_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = AreaListAdapter(OnItemClick())
-        recyclerView.setAdapter(adapter)
+        recyclerView.adapter = adapter
         return view
     }
 
@@ -61,8 +61,8 @@ class AreaFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        (activity as MainActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-        (activity as MainActivity).getSupportActionBar()?.setTitle("Area List")
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).supportActionBar?.title = "Area List"
     }
 
     inner class OnItemClick : IOnClickCallback {

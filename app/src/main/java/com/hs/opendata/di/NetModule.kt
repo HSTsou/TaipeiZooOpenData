@@ -6,12 +6,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hs.opendata.constants.Constants
-import com.hs.opendata.db.AppDatabase
 import com.hs.opendata.network.request.AreaRequest
-import com.hs.opendata.repository.AreaRepo
-import com.hs.opendata.repository.AreaRepoImpl
-import com.hs.opendata.repository.FavAreaRepo
-import com.hs.opendata.repository.FavAreaRepoImpl
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
