@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
             synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
+                    context,
                     AppDatabase::class.java,
                     "area_database"
                 ).addMigrations(MIGRATION_1_2)

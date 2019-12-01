@@ -23,7 +23,7 @@ interface AreaRepo {
 }
 
 class AreaRepoImpl(var db: AppDatabase, private val api: AreaRequest) : AreaRepo {
-    private fun getMockAreaData(): List<Area> {
+    fun getMockAreaData(): List<Area> {
         return listOf(
             Area(
                 "http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg",

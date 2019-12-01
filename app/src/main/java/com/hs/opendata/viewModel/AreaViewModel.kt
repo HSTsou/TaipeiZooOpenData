@@ -19,7 +19,7 @@ class AreaViewModel(private val repo: AreaRepo) : ViewModel(), KoinComponent {
         disposables.clear()
     }
 
-    private val areas: MutableLiveData<List<Area>> by lazy {
+    val areas: MutableLiveData<List<Area>> by lazy {
         MutableLiveData<List<Area>>().also {
             getAreaInfo()
         }
@@ -36,7 +36,7 @@ class AreaViewModel(private val repo: AreaRepo) : ViewModel(), KoinComponent {
                 areas.value = areaList
             }
         })
-        disposables.add(dis)
+         disposables.add(dis)
     }
 
     fun saveFavArea(area: Area) {
