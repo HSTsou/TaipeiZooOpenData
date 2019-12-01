@@ -19,3 +19,7 @@ before_script:
 
 script:
   - ./gradlew assembleRelease
+
+notifications:
+      email:
+        - aids71214@gmail.com
