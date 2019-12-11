@@ -20,10 +20,8 @@ import org.mockito.MockitoAnnotations
 
 class AreaViewModelTest {
 
-    companion object {
-        @ClassRule @JvmField
-        val schedulers = RxImmediateSchedulerRule()
-    }
+    @get:Rule
+    val schedulers = RxImmediateSchedulerRule()
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -35,7 +33,6 @@ class AreaViewModelTest {
     @Mock
     lateinit var areaRequest: AreaRequest
 
-//    @Mock
     lateinit var areaViewModel: AreaViewModel
 
     @Mock
@@ -43,11 +40,8 @@ class AreaViewModelTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this);
-        val context: Context = mock(Context::class.java)
-//        db = AppDatabase.getDatabase(context)
+        MockitoAnnotations.initMocks(this)
         areaRepo = AreaRepoImpl(db, areaRequest)
-//        var areaRepo: AreaRepoImpl = spy(AreaRepoImpl::class.java)
         areaViewModel = AreaViewModel(areaRepo)
     }
 
