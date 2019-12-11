@@ -1,19 +1,32 @@
 package com.hs.opendata.viewModel
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
+import com.hs.opendata.RxImmediateSchedulerRule
 import com.hs.opendata.db.AppDatabase
+import com.hs.opendata.model.Area
 import com.hs.opendata.network.request.AreaRequest
+import com.hs.opendata.network.response.AreaResponse
+import com.hs.opendata.network.response.ResultResponse
 import com.hs.opendata.repository.AreaRepoImpl
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import io.reactivex.Single
+import junit.framework.Assert.assertNotNull
+import org.junit.*
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.stubbing.Answer
-import java.util.*
+import org.mockito.MockitoAnnotations
+
 
 class AreaViewModelTest {
+
+    companion object {
+        @ClassRule @JvmField
+        val schedulers = RxImmediateSchedulerRule()
+    }
+
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var areaRepo: AreaRepoImpl
@@ -22,14 +35,17 @@ class AreaViewModelTest {
     @Mock
     lateinit var areaRequest: AreaRequest
 
-    @Mock
+//    @Mock
     lateinit var areaViewModel: AreaViewModel
+
+    @Mock
+    var areaListObserver: Observer<List<Area>>? = null
 
     @Before
     fun setUp() {
+        MockitoAnnotations.initMocks(this);
         val context: Context = mock(Context::class.java)
-        areaRequest = mock(AreaRequest::class.java)
-        db = AppDatabase.getDatabase(context)
+//        db = AppDatabase.getDatabase(context)
         areaRepo = AreaRepoImpl(db, areaRequest)
 //        var areaRepo: AreaRepoImpl = spy(AreaRepoImpl::class.java)
         areaViewModel = AreaViewModel(areaRepo)
@@ -46,12 +62,22 @@ class AreaViewModelTest {
 
     @Test
     fun updateAreaInfoData() {
-//        `when`(areaViewModel.getAreaInfo())
-//            .thenReturn({ Observable.just(areaRepo.getMockAreaData()) })
-//        areaViewModel.getAreaInfo()
-//        areaViewModel.areas.value = areaRepo.getMockAreaData()
-
-//        Assert.assertEquals(areaRepo.getMockAreaData(), areaViewModel.areas.value)
+        `when`(areaRepo.getAreaInfo())
+            .thenReturn(
+                Single.just(
+                    AreaResponse(
+                        ResultResponse(
+                            0,
+                            0,
+                            0,
+                            "",
+                            areaRepo.getMockAreaData()
+                        )
+                    )
+                )
+            )
+        areaViewModel.getAreaInfo()
+        assertNotNull(areaListObserver)
     }
 
     @Test

@@ -41,6 +41,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
     implementation "android.arch.lifecycle:reactivestreams:$archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
+    testImplementation "android.arch.core:core-testing:$archLifecycleVersion"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.1.0'
 
     def roomVersion = '2.1.0'
     implementation "androidx.room:room-runtime:$roomVersion"
