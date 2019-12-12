@@ -11,8 +11,9 @@ import com.hs.opendata.network.response.AreaResponse
 import com.hs.opendata.network.response.ResultResponse
 import com.hs.opendata.repository.AreaRepoImpl
 import io.reactivex.Single
-import junit.framework.Assert.assertNotNull
+
 import org.junit.*
+import org.junit.Assert.*
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
@@ -71,7 +72,8 @@ class AreaViewModelTest {
                 )
             )
         areaViewModel.getAreaInfo()
-        assertNotNull(areaListObserver)
+//        assertNotNull(areaListObserver)
+        assertEquals(areaRepo.getMockAreaData(), areaViewModel.areas.value)
     }
 
     @Test
